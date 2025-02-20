@@ -1,23 +1,21 @@
 import { CircleHelp, EyeClosed, EyeIcon, MailQuestion } from "lucide-react";
 import ProfileNotification from "./RefatoracaoComponents/ProfileNotification/ProfileNotification";
-
+import {  User } from "@prisma/client";
 //select-none usamos para nao selecionar texto!
-
 interface HeaderNuProps {
     setEyesFunction?: () => void; // Corrigido: deve ser uma função
     isVisibleEyes?: boolean; // Estado que controla a visibilidade dos olhos
+    User: User
 }
+const HeaderNu = ({ User, setEyesFunction = () => { }, isVisibleEyes = false }: HeaderNuProps) => {
 
-const HeaderNu = ({ setEyesFunction = () => { }, isVisibleEyes = false }: HeaderNuProps) => {
     return (
         <div>
             <div >
                 <div className="p-5 bg-purple-900">
                     <div className="items-center justify-between flex">
                         <div>
-
-                            <ProfileNotification />
-
+                            <ProfileNotification User={User?.info} />
                         </div>
                         <div className="flex flex-row gap-9 items-center">
                             {/*
@@ -45,12 +43,11 @@ const HeaderNu = ({ setEyesFunction = () => { }, isVisibleEyes = false }: Header
                     </div>
 
                     <div className="p-5 pl-3 pb-0 mt-7 mb-3">
-                        <p className="font-medium text-lg select-none">Olá, Master</p>
+                        <p className="font-medium text-lg select-none">Olá, {User?.nickname}</p>
                     </div>
                 </div>
             </div>
         </div>
     );
 };
-
 export default HeaderNu;

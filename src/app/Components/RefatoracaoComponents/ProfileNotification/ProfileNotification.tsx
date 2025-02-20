@@ -7,8 +7,14 @@ import ProfileNotificationMais from "./ProfileMaisNotification";
 import Link from "next/link";
 import DivisaoPequena from "../../DivisaoPequena";
 import CartoesMenuOption from "../../MainBank/CartoesNu";
+import { InfoUser, User } from "@prisma/client";
 
-const ProfileNotification = () => {
+interface ProfileNotificationProp {
+    User: InfoUser
+
+}
+const ProfileNotification = ({ User }: ProfileNotificationProp) => {
+    // console.log(User?.conta)
     return (
 
         <Sheet >
@@ -45,9 +51,9 @@ const ProfileNotification = () => {
                                 <div>
                                     <span className="justify-start items-start flex font-medium -tracking-tighter">Enderson</span>
                                     <span className="justify-start items-start text-[13px] flex gap-1 text-zinc-300">
-                                        Agencia 0001
+                                        Agencia {User?.numero_banco}
                                         <span>&bull;&nbsp;</span>
-                                        Conta 99999999-8
+                                        Conta {User?.conta}
                                     </span>
                                 </div>
                                 <ProfileNotificationMais />

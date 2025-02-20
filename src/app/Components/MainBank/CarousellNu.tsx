@@ -109,7 +109,7 @@ const CarrousellOptions = () => {
     return (
         <div>
             {/* Carrossel */}
-            <div className="w-full max-w-lg mx-auto mt-3 mb-4">
+            <div className="w-full  mt-3 mb-4">
                 <Carousel className="relative">
                     <CarouselContent
                         as={animated.div}
@@ -125,7 +125,7 @@ const CarrousellOptions = () => {
                         {items.map((item, index) => (
                             <CarouselItem
                                 key={index}
-                                className="flex justify-center shrink-0 w-full"
+                                className=" justify-center  flex shrink-0 w-full"
                             >
                                 <Link href={item.href} className="w-screen max-w-lg">
                                     <div className="bg-zinc-800 w-full h-20 rounded-3xl flex justify-between items-center p-4">
