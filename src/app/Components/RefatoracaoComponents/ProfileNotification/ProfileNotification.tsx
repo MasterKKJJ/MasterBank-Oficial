@@ -1,5 +1,6 @@
 
 
+"use client"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Bell, Bolt, CornerDownLeft, Landmark, MailQuestion, Plus, ShieldQuestion, Smartphone, UserPlus, UserRoundPen } from "lucide-react";
 import Image from "next/image";
@@ -8,12 +9,19 @@ import Link from "next/link";
 import DivisaoPequena from "../../DivisaoPequena";
 import CartoesMenuOption from "../../MainBank/CartoesNu";
 import { InfoUser, User } from "@prisma/client";
+import { useRouter } from "next/router";
 
 interface ProfileNotificationProp {
     User: InfoUser
 
 }
 const ProfileNotification = ({ User }: ProfileNotificationProp) => {
+    const router = useRouter();
+    const handleLogout = async () => {
+        await fetch("/api/logout", { method: "POST", credentials: "include" });
+        router.push("/login"); // redireciona para a página de login
+      };
+
     // console.log(User?.conta)
     return (
 
@@ -92,7 +100,7 @@ const ProfileNotification = ({ User }: ProfileNotificationProp) => {
 
                                 <div className="flex justify-center gap-3 p-2 items-center bg-zinc-800 rounded-full">
                                     <CornerDownLeft />
-                                    <span> Sair do Aplicativo</span>
+                                    <span onClick={() => handleLogout()}> Sair do Aplicativo</span>
                                 </div>
                             </div>
 

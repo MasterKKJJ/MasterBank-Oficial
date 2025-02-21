@@ -9,6 +9,7 @@ import PartesSeparadasComponents from "./Components/MainBank/PartesSeparadasGene
 import PedirCartaoDeCredito from "./Components/MainBank/ComponentesGenericos/PedirCartaoDeCredito";
 import CartoesMenuOption from "./Components/MainBank/CartoesNu";
 import { Smartphone } from "lucide-react";
+import ProtectedRoute from "./protected-route";
 
 export default function Home() {
   const [isVisibleEyes, setIsVisibleEyes] = useState<boolean>(true);
@@ -51,21 +52,23 @@ export default function Home() {
   }
 
   return (
+      <ProtectedRoute>
     <div className="flex flex-col">
       {user && (
         <div>
-          <HeaderNu User={user} setEyesFunction={setEyesFunction} isVisibleEyes={isVisibleEyes} />
-          <DivisaoPequena />
-          <MainBank User={user} isVisibleEyes={isVisibleEyes}>
-            <CartoesMenuOption href="/cartoes" icon={<Smartphone />} text="Meus Cartões" />
-            <CarrousellOptions />
-          </MainBank>
-          <DivisaoPequena />
-          <PartesSeparadasComponents>
-            <PedirCartaoDeCredito />
-          </PartesSeparadasComponents>
+            <HeaderNu User={user} setEyesFunction={setEyesFunction} isVisibleEyes={isVisibleEyes} />
+            <DivisaoPequena />
+            <MainBank User={user} isVisibleEyes={isVisibleEyes}>
+              <CartoesMenuOption href="/cartoes" icon={<Smartphone />} text="Meus Cartões" />
+              <CarrousellOptions />
+            </MainBank>
+            <DivisaoPequena />
+            <PartesSeparadasComponents>
+              <PedirCartaoDeCredito />
+            </PartesSeparadasComponents>
         </div>
       )}
     </div>
+      </ProtectedRoute>
   );
 }

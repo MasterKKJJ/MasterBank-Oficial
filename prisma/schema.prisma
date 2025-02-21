@@ -1,35 +1,36 @@
-generator client {
-  provider = "prisma-client-js"
-}
+  generator client {
+    provider = "prisma-client-js"
+  }
 
-datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
-}
+  datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+  }
 
-model User {
-  id            String       @id @default(auto()) @map("_id") @db.ObjectId
-  nome_completo String
-  nickname      String       @unique
-  balance       BalanceUser?
-  info          InfoUser?
-}
+  model Bank {
+    id         String @id @default(auto()) @map("_id") @db.ObjectId
+    name       String @default("MasterBank") // Nome fixo do seu banco
+    agency     Float  @unique @default(0001)
+    bankNumber Float  @unique @default(9241) // Número único do seu banco
+    // Removemos a lista de users para evitar redundância
+  }
 
-model BalanceUser {
-  id           String       @id @default(auto()) @map("_id") @db.ObjectId
-  user_id      String       @unique @db.ObjectId
-  money_amount Float  
+  model User {
+    id             String       @id @default(auto()) @map("_id") @db.ObjectId
+    primary_name   String
+    rest_of_name   String
+    password       String
+    cpf            String       @unique
+    email          String       @unique
+    phone          String       @unique
+    account_number Float        @unique // Número da conta no seu banco
+    balance        BalanceUser?
+    // Relação implícita com o banco (não precisa de FK direta)
+  }
 
-  user         User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
-}
-
-model InfoUser {
-  id           String       @id @default(auto()) @map("_id") @db.ObjectId
-  user_id      String       @unique @db.ObjectId
-  cpf          String       @unique
-  rg           String       @unique
-  numero_banco String?       
-  conta        String
-
-  user         User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
-}
+  model BalanceUser {
+    id      String @id @default(auto()) @map("_id") @db.ObjectId
+    user_id String @unique @db.ObjectId
+    balance Float  @default(0)
+    user    User   @relation(fields: [user_id], references: [id])
+  }
