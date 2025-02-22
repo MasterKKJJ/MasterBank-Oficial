@@ -12,6 +12,7 @@
     name       String @default("MasterBank") // Nome fixo do seu banco
     agency     Float  @unique @default(0001)
     bankNumber Float  @unique @default(9241) // Número único do seu banco
+    conta String @unique @default("99989829-2")
     // Removemos a lista de users para evitar redundância
   }
 

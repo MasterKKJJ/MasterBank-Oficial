@@ -12,6 +12,7 @@ export async function POST(req: Request) {
     
     const dados = await req.json();
     const { cpf, password } = dados
+    console.log(cpf, password)
     if (!cpf || !password) {
       return NextResponse.json({ error: "Usuário e senha são obrigatórios!" }, { status: 400 });
     }

@@ -3,8 +3,13 @@
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Share2 } from "lucide-react";
 import MaisDadosBanc from "./DadosMais";
+import { Bank } from "@prisma/client";
 
-const ProfileNotificationMais = () => {
+interface ProfileNotificationMaisProps {
+    Bank: Bank | undefined
+}
+
+const ProfileNotificationMais = ({Bank}:ProfileNotificationMaisProps) => {
     return (
         <Sheet>
             <SheetTrigger>
@@ -26,10 +31,10 @@ const ProfileNotificationMais = () => {
                             <div>
                                 <span className="text-xs">Dados bancários</span>
                             </div>
-                            <MaisDadosBanc text="Agência" value="0001" />
-                            <MaisDadosBanc text="Conta" value="999999999-9" />
-                            <MaisDadosBanc text="Banco" value="9191" />
-                            <MaisDadosBanc text="Bank Master Pagamentos - Instituição de Pagamento" isOneLiner />
+                            <MaisDadosBanc text="Agência" value={Bank?.agency} />
+                            <MaisDadosBanc text="Conta" value={Bank?.conta} />
+                            <MaisDadosBanc text="Banco" value={Bank?.bankNumber} />
+                            <MaisDadosBanc text={Bank?.name} isOneLiner />
                         </div>
                     </SheetDescription>
                 </SheetHeader>

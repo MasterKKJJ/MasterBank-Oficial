@@ -4,8 +4,8 @@ import DivisaoPequena from "../../DivisaoPequena";
 
 interface MaisDadosBancProps {
     isOneLiner?: boolean
-    text: string
-    value?: string
+    text: string | undefined
+    value?: string | number
 }
 
 const MaisDadosBanc = ({ text, value, isOneLiner }: MaisDadosBancProps) => {

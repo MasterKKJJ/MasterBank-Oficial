@@ -2,24 +2,19 @@ import { ChevronRight } from "lucide-react";
 import BankAreasPadroes from "./BankAreasPadroes";
 import Link from "next/link";
 import PartesSeparadasComponents from "./PartesSeparadasGenerics/PartesSeparadas";
-import { User as PrismaUser } from "@prisma/client";
-
-interface User extends PrismaUser {
-    balance?: {
-        money_amount: number;
-    };
-}
-
+import { BalanceUser, User } from "@prisma/client";
 interface MainBankProps {
     children?: React.ReactNode;
     isVisibleEyes: boolean;
-    User: User;
+    User: User | undefined;
+    balanceuser: BalanceUser | undefined
 }
 
-const MainBank = ({ children, isVisibleEyes, User }: MainBankProps) => {
+const MainBank = ({ children, isVisibleEyes, User, balanceuser }: MainBankProps) => {
     // Garantir que balance.money_amount seja seguro
     
-    const moneyAmount = User?.balance?.money_amount || '****';
+    // const moneyAmount = User?.balance?.money_amount || '****';
+    
 
     return (
         <PartesSeparadasComponents>
@@ -30,7 +25,7 @@ const MainBank = ({ children, isVisibleEyes, User }: MainBankProps) => {
                 </div>
                 <div>
                     <p className="text-lg font-normal">
-                        {isVisibleEyes ? moneyAmount : '****'}
+                        {isVisibleEyes ? balanceuser?.balance : '****'}
                     </p>
                 </div>
             </Link>

@@ -2,21 +2,23 @@
 
 "use client"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Bell, Bolt, CornerDownLeft, Landmark, MailQuestion, Plus, ShieldQuestion, Smartphone, UserPlus, UserRoundPen } from "lucide-react";
+import { Ban, Bell, Bolt, CornerDownLeft, Landmark, MailQuestion, Plus, ShieldQuestion, Smartphone, UserPlus, UserRoundPen } from "lucide-react";
 import Image from "next/image";
 import ProfileNotificationMais from "./ProfileMaisNotification";
 import Link from "next/link";
 import DivisaoPequena from "../../DivisaoPequena";
 import CartoesMenuOption from "../../MainBank/CartoesNu";
-import { InfoUser, User } from "@prisma/client";
-import { useRouter } from "next/router";
+import { Bank, User } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 interface ProfileNotificationProp {
-    User: InfoUser
+    User: User | undefined
+    Bank: Bank | undefined
 
 }
-const ProfileNotification = ({ User }: ProfileNotificationProp) => {
+const ProfileNotification = ({ User, Bank }: ProfileNotificationProp) => {
     const router = useRouter();
+    
     const handleLogout = async () => {
         await fetch("/api/logout", { method: "POST", credentials: "include" });
         router.push("/login"); // redireciona para a página de login
@@ -57,14 +59,14 @@ const ProfileNotification = ({ User }: ProfileNotificationProp) => {
                             <div className="flex flex-row items-center gap-3" >
                                 <UserRoundPen width={32} height={32} />
                                 <div>
-                                    <span className="justify-start items-start flex font-medium -tracking-tighter">Enderson</span>
+                                    <span className="justify-start items-start flex font-medium -tracking-tighter">{User?.primary_name}</span>
                                     <span className="justify-start items-start text-[13px] flex gap-1 text-zinc-300">
-                                        Agencia {User?.numero_banco}
+                                        {Bank?.agency}
                                         <span>&bull;&nbsp;</span>
-                                        Conta {User?.conta}
+                                        Conta {Bank?.conta}
                                     </span>
                                 </div>
-                                <ProfileNotificationMais />
+                                <ProfileNotificationMais Bank={Bank} />
                             </div>
 
                             <div className="mt-4 text-xs -mx-6 bg-purple-900">

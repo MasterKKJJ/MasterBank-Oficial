@@ -1,31 +1,32 @@
-import { PrismaClient } from '@prisma/client';import bcrypt from 'bcryptjs';
-const prisma = new PrismaClient();                                                                                              async function main() {                                                              
-    const hashedPassword = await bcrypt.hash("Master", 10);
-    const user = await prisma.user.create({
-      data: {
-        primary_name: 'Enderson',
-        rest_of_name: 'Alves da Silva',
+import { PrismaClient } from '@prisma/client'; import bcrypt from 'bcryptjs';
+const prisma = new PrismaClient(); async function main() {
+  const hashedPassword = await bcrypt.hash("Master", 10);
+
+
+  const users = await prisma.user.createMany({
+    data:[
+      {
+        account_number: 1234568,
+        cpf: "8974337276",
+        email: "carllacabecao@gmail.com",
+        primary_name: "Carlla",
+        rest_of_name: "Victoria Soares Costa",
         password: hashedPassword,
-        cpf: "70526806290",
-        email: 'masterzarby@gmail.com',
-        phone: '11987654321',
-        account_number: 123456,
-        balance: {
-          
-          create: { 
-            
-            balance: 10 }, // Criando o saldo inicial do usuário
-        },
+        phone: "559293812397",
         
-      },
-    });
-    console.log('Seed conclusão com sucesso!', { user });
+      }
+
+    ]
+
+  });
+
+  console.log('Seed conclusão com sucesso!', { users });
 }
 main()
-    .catch((e) => {
-        console.error('Erro ao executar seed:', e);
-        process.exit(1);
-    })
-    .finally(async () => {
-        await prisma.$disconnect();
-    });
+  .catch((e) => {
+    console.error('Erro ao executar seed:', e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

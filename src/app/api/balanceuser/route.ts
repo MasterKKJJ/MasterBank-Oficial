@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken"
-import {PrismaClient} from "@prisma/client"
+import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
 export async function POST() {
     const cookie = (await cookies()).get('token');
@@ -10,16 +10,22 @@ export async function POST() {
     }
 
     const decoded = jwt.verify(cookie?.value as string, process.env.JWT_SECRET as string);
-    
-    
-    const User = await prisma.user.findFirst({
-        where: { id: decoded?.id },
-        
+    const balance = await prisma.balanceUser.findFirst({
+        where: {
+            user:
+            {
+                id: decoded?.id
+            }
+        },
+        select: {
+            balance: true
+        }
+        ,
     })
-    if (!User) {
+    if (!balance) {
         NextResponse.json({ error: "Usuário não encontrado!" }, { status: 400 });
     }
-    return NextResponse.json({ message: "User capturado!", dados: User }, { status: 200 });
+    return NextResponse.json({ message: "User capturado!", dados: balance }, { status: 200 });
 
 
 }
