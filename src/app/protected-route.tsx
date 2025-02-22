@@ -10,7 +10,7 @@ interface ProtectedRouteProps {
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const pathname = usePathname(); 
+  const pathname = usePathname();
 
   // 🔓 Rotas permitidas para usuários NÃO logados
   const publicRoutes = ["/login", "/register"];
@@ -46,7 +46,13 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     checkAuth();
   }, [pathname, router]);
 
-  if (isAuthenticated === null) return <p>Carregando...</p>;
+  if (isAuthenticated === null) {
+    return (
+      <div className="fullscreen-loader">
+        <div className="loader"></div>
+      </div>
+    );
+  }
 
   // Renderiza o conteúdo protegido apenas se estiver autenticado
   return <>{isAuthenticated ? children : null}</>;

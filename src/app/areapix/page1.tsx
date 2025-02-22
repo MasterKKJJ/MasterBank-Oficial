@@ -1,7 +1,8 @@
+"use client"
 import { Barcode, DollarSign, HandCoins, Smartphone, Flower } from "lucide-react";
-import CaixinhasNubakOptions from "../RefatoracaoComponents/CaixinhasOpcoesNu";
+import CaixinhasNubakOptions from "../Components/RefatoracaoComponents/CaixinhasOpcoesNu";
 import { useRef, useState } from "react";
-const BankAreasPadroes = () => {
+const AreaPixUser = () => {
     const scrollRef = useRef<HTMLDivElement>(null);
     const [isDragging, setIsDragging] = useState(false);
     const [startX, setStartX] = useState(0);
@@ -48,9 +49,21 @@ const BankAreasPadroes = () => {
                 <CaixinhasNubakOptions icon={<Barcode />} text="Pagar" />
                 <CaixinhasNubakOptions icon={<HandCoins />} text="Pegar emprestado" />
                 <CaixinhasNubakOptions icon={<Smartphone />} text="Recarga de Celular" />
+                <CaixinhasNubakOptions icon={<Flower />} text="Caixinhas e Investir" /><CaixinhasNubakOptions icon={<DollarSign />} href="/areapix" text="Área Pix e Transferir" />
+                <CaixinhasNubakOptions icon={<Barcode />} text="Pagar" />
+                <CaixinhasNubakOptions icon={<HandCoins />} text="Pegar emprestado" />
+                <CaixinhasNubakOptions icon={<Smartphone />} text="Recarga de Celular" />
+                <CaixinhasNubakOptions icon={<Flower />} text="Caixinhas e Investir" /><CaixinhasNubakOptions icon={<DollarSign />} href="/areapix" text="Área Pix e Transferir" />
+                <CaixinhasNubakOptions icon={<Barcode />} text="Pagar" />
+                <CaixinhasNubakOptions icon={<HandCoins />} text="Pegar emprestado" />
+                <CaixinhasNubakOptions icon={<Smartphone />} text="Recarga de Celular" />
+                <CaixinhasNubakOptions icon={<Flower />} text="Caixinhas e Investir" /><CaixinhasNubakOptions icon={<DollarSign />} href="/areapix" text="Área Pix e Transferir" />
+                <CaixinhasNubakOptions icon={<Barcode />} text="Pagar" />
+                <CaixinhasNubakOptions icon={<HandCoins />} text="Pegar emprestado" />
+                <CaixinhasNubakOptions icon={<Smartphone />} text="Recarga de Celular" />
                 <CaixinhasNubakOptions icon={<Flower />} text="Caixinhas e Investir" />
             </div>
         </div>
     );
 };
-export default BankAreasPadroes;
+export default AreaPixUser;

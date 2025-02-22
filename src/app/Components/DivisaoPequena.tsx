@@ -1,11 +1,13 @@
 interface DivisaoPequenaProps {
     ignorePadding?: boolean;
     ignorePaddingNumber?: number; // valor numérico que representa, por exemplo, o número da classe -mx-{n} (n na escala do Tailwind)
+    numero_tamanho?: number
 }
 
 const DivisaoPequena = ({
     ignorePadding = false,
     ignorePaddingNumber = 6,
+    numero_tamanho = 2
 }: DivisaoPequenaProps) => {
     if (ignorePadding) {
         // Considerando que cada unidade de spacing do Tailwind equivale a 0.25rem,
@@ -17,6 +19,7 @@ const DivisaoPequena = ({
                 className="w-screen"
             >
                 <div className="h-[2px] w-full bg-zinc-900" />
+
             </div>
         );
     } else {

@@ -22,7 +22,7 @@ const ProfileNotification = ({ User, Bank }: ProfileNotificationProp) => {
     const handleLogout = async () => {
         await fetch("/api/logout", { method: "POST", credentials: "include" });
         router.push("/login"); // redireciona para a página de login
-      };
+    };
 
     // console.log(User?.conta)
     return (

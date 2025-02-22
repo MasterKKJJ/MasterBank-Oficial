@@ -7,8 +7,8 @@ import Image from "next/image";
 export default function Login() {
   const [cpf, setCpf] = useState("");
   const [password, setPassword] = useState("");
-  const [ErrorPassword, setErrorPassword] = useState(""); 
-  const [SubmitForm, setSubmitForm] = useState<boolean>(false); 
+  const [ErrorPassword, setErrorPassword] = useState("");
+  const [SubmitForm, setSubmitForm] = useState<boolean>(false);
   const router = useRouter();
 
   // Verificar autenticação ao carregar a página
@@ -16,10 +16,15 @@ export default function Login() {
     const checkAuth = async () => {
       const res = await fetch("/api/auth/me", { credentials: "include" });
       if (res.ok) {
+
+
         router.push("/"); // Redireciona se estiver autenticado
+      } else {
+        localStorage.removeItem("user");
+        localStorage.removeItem("bank");
+        localStorage.removeItem("balanceUser");
       }
     };
-      console.log("Teste")
     checkAuth();
   }, [router]);
 
@@ -42,15 +47,16 @@ export default function Login() {
   };
 
 
-  const submithandle = async (e: KeyboardEvent) =>{
-    if(e.key === "Enter"){
+  const submithandle = async (e: KeyboardEvent) => {
+    if (e.key === "Enter") {
       handleLogin();
-      
-      
+
+
     }
   }
-  
-  
+
+
+
 
   return (
     <div className="bg-black min-h-screen flex flex-col">
@@ -74,9 +80,9 @@ export default function Login() {
                   id="cpf"
                   value={cpf}
                   onChange={(e) => setCpf(e.target.value)}
-                  onKeyDown={(e )=> submithandle(e)}
+                  onKeyDown={(e) => submithandle(e)}
                   className="bg-transparent outline-none mt-2 border-0 border-b border-b-gray-500 w-full"
-                  />
+                />
               </div>
               <div >
                 <label htmlFor="senha" className="text-[16px] font-semibold">Senha</label>
@@ -84,35 +90,35 @@ export default function Login() {
                   type="password"
                   id="senha"
                   value={password}
-                  onKeyDown={(e )=> submithandle(e)}
+                  onKeyDown={(e) => submithandle(e)}
                   onChange={(e) => setPassword(e.target.value)}
                   className="bg-transparent outline-none border-0 mt-2  border-b border-b-gray-500 w-full"
                 />
               </div>
-              
+
               <div>
                 <p className="text-xs">Use a senha de acesso ao app, com 8 letras e/ou números</p>
               </div>
-              { /* Colocar os olhos de ver ou não a senha*/ }
+              { /* Colocar os olhos de ver ou não a senha*/}
 
 
               <div className="mt-2">
-              <p className="text-purple-500 text-sm p-4 w-max font-bold">Esqueci a senha</p>
+                <p className="text-purple-500 text-sm p-4 w-max font-bold">Esqueci a senha</p>
+              </div>
+
+              {!SubmitForm ? (<div className="items-center flex justify-center rounded-full">
+                <button onClick={handleLogin} className="font-semibold  tracking-tight   w-screen py-3 bg-zinc-900/50 text-white rounded-full">
+                  Acessar
+                </button>
+              </div>) : (<div className="items-center flex justify-center rounded-full">
+                <button onClick={handleLogin} disabled className="font-bold text-md w-full py-3 bg-zinc-900/50 text-white rounded-full cursor-not-allowed">
+                  Acessar
+                </button>
+              </div>)}
             </div>
 
-            {!SubmitForm ? (<div className="items-center flex justify-center rounded-full">
-            <button onClick={handleLogin} className="font-semibold  tracking-tight   w-screen py-3 bg-zinc-900/50 text-white rounded-full">
-              Acessar
-            </button>
-         </div>) : (<div className="items-center flex justify-center rounded-full">
-            <button onClick={handleLogin} disabled className="font-bold text-sm w-full py-3 bg-zinc-900/50 text-white rounded-full cursor-not-allowed">
-              Acessar
-            </button>
-         </div>)}
-            </div>
-            
           </div>
-         
+
         </div>
       </main>
 

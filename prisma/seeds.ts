@@ -1,27 +1,39 @@
-import { PrismaClient } from '@prisma/client'; import bcrypt from 'bcryptjs';
-const prisma = new PrismaClient(); async function main() {
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
+
+const prisma = new PrismaClient();
+
+async function main() {
   const hashedPassword = await bcrypt.hash("Master", 10);
 
-
-  const users = await prisma.user.createMany({
-    data:[
-      {
-        account_number: 1234568,
-        cpf: "8974337276",
-        email: "carllacabecao@gmail.com",
-        primary_name: "Carlla",
-        rest_of_name: "Victoria Soares Costa",
-        password: hashedPassword,
-        phone: "559293812397",
-        
-      }
-
-    ]
-
+  // Usando findFirst para buscar o usuário pelo nome
+  const user = await prisma.user.findFirst({
+    where: {
+      primary_name: "Carlla",  // Busca pelo nome
+    },
+    select: {
+      id: true,  // Seleciona o id do usuário
+    }
   });
 
-  console.log('Seed conclusão com sucesso!', { users });
+  if (!user) {
+    console.log("Usuário não encontrado.");
+    return;
+  }
+
+  // Atualiza o saldo no modelo BalanceUser
+  const updatedUserBalance = await prisma.balanceUser.update({
+    where: {
+      user_id: user.id,  // Usando o id do usuário
+    },
+    data: {
+      balance: 1000.12,  // Atualiza o saldo
+    }
+  });
+
+  console.log('Saldo atualizado com sucesso!', { updatedUserBalance });
 }
+
 main()
   .catch((e) => {
     console.error('Erro ao executar seed:', e);

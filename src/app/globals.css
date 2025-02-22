@@ -14,6 +14,42 @@ body {
   color: rgb(231, 231, 231);
 }
 
+/* Esconde a barra de rolagem em navegadores modernos */
+/* Remove completamente a barra de rolagem */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+
+/* bolinha loading */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3); /* cor clara */
+  border-top: 3px solid #800080; /* roxo */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.fullscreen-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Preenche toda a altura da tela */
+}
+
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;
