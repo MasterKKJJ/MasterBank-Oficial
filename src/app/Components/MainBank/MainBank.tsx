@@ -6,15 +6,13 @@ import { BalanceUser, User } from "@prisma/client";
 interface MainBankProps {
     children?: React.ReactNode;
     isVisibleEyes: boolean;
-    User: User | undefined;
     balanceuser: BalanceUser | undefined
 }
 
-const MainBank = ({ children, isVisibleEyes, User, balanceuser }: MainBankProps) => {
+const MainBank = ({ children, isVisibleEyes, balanceuser }: MainBankProps) => {
     // Garantir que balance.money_amount seja seguro
     
     // const moneyAmount = User?.balance?.money_amount || '****';
-    
 
     return (
         <PartesSeparadasComponents>
@@ -25,7 +23,7 @@ const MainBank = ({ children, isVisibleEyes, User, balanceuser }: MainBankProps)
                 </div>
                 <div>
                     <p className="text-lg font-normal">
-                        {isVisibleEyes ? balanceuser?.balance : '****'}
+                        {isVisibleEyes ? balanceuser?.balance.toLocaleString('pt-BR', {currency: 'BRL', minimumFractionDigits: 2}): '****'}
                     </p>
                 </div>
             </Link>

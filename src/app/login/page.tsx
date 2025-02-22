@@ -8,6 +8,7 @@ export default function Login() {
   const [cpf, setCpf] = useState("");
   const [password, setPassword] = useState("");
   const [ErrorPassword, setErrorPassword] = useState(""); 
+  const [SubmitForm, setSubmitForm] = useState<boolean>(false); 
   const router = useRouter();
 
   // Verificar autenticação ao carregar a página
@@ -23,7 +24,7 @@ export default function Login() {
   }, [router]);
 
   const handleLogin = async () => {
-  
+    setSubmitForm(true)
     const res = await fetch("/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -32,13 +33,22 @@ export default function Login() {
     });
 
     const data = await res.json();
-
+    setSubmitForm(false)
     if (res.ok) {
       router.push("/"); // Redireciona após login
     } else {
       alert(data.error);
     }
   };
+
+
+  const submithandle = async (e: KeyboardEvent) =>{
+    if(e.key === "Enter"){
+      handleLogin();
+      
+      
+    }
+  }
   
   
 
@@ -54,27 +64,29 @@ export default function Login() {
       </header>
       <main className="flex-1 flex items-center justify-center w-screen">
         <div className="flex flex-col  justify-center h-[250px] w-[350px] ">
-          <h1 className="text-white text-xl mb-5 tracking-wider font-semibold">Acesse o MasterBank</h1>
+          <h1 className="text-white text-[28px] mb-5 tracking-wider font-medium">Acesse o MasterBank</h1>
           <div className="text-gray-400">
             <div className="flex flex-col gap-4 w-[300]">
               <div className="">
-                <label htmlFor="cpf" className="text-xs">CPF</label>
+                <label htmlFor="cpf" className="text-[16px] font-semibold">CPF</label>
                 <input
                   type="text"
                   id="cpf"
                   value={cpf}
                   onChange={(e) => setCpf(e.target.value)}
-                  className="bg-transparent outline-none border-0 border-b border-b-gray-500 w-full"
-                />
+                  onKeyDown={(e )=> submithandle(e)}
+                  className="bg-transparent outline-none mt-2 border-0 border-b border-b-gray-500 w-full"
+                  />
               </div>
               <div >
-                <label htmlFor="senha" className="text-xs">Senha</label>
+                <label htmlFor="senha" className="text-[16px] font-semibold">Senha</label>
                 <input
                   type="password"
                   id="senha"
                   value={password}
+                  onKeyDown={(e )=> submithandle(e)}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="bg-transparent outline-none border-0 border-b border-b-gray-500 w-full"
+                  className="bg-transparent outline-none border-0 mt-2  border-b border-b-gray-500 w-full"
                 />
               </div>
               
@@ -82,23 +94,32 @@ export default function Login() {
                 <p className="text-xs">Use a senha de acesso ao app, com 8 letras e/ou números</p>
               </div>
               { /* Colocar os olhos de ver ou não a senha*/ }
-            </div>
-            <div className="mt-2">
+
+
+              <div className="mt-2">
               <p className="text-purple-500 text-sm p-4 w-max font-bold">Esqueci a senha</p>
             </div>
-          </div>
-         <div className="items-center flex justify-center rounded-full">
-            <button onClick={handleLogin} className="font-bold text-sm  w-screen py-3 bg-zinc-900/50 text-white rounded-full">
+
+            {!SubmitForm ? (<div className="items-center flex justify-center rounded-full">
+            <button onClick={handleLogin} className="font-semibold  tracking-tight   w-screen py-3 bg-zinc-900/50 text-white rounded-full">
               Acessar
             </button>
-         </div>
+         </div>) : (<div className="items-center flex justify-center rounded-full">
+            <button onClick={handleLogin} disabled className="font-bold text-sm w-full py-3 bg-zinc-900/50 text-white rounded-full cursor-not-allowed">
+              Acessar
+            </button>
+         </div>)}
+            </div>
+            
+          </div>
+         
         </div>
       </main>
 
-      <footer className=" p-4 bg-zinc-900/50">
-        <div className="text-purple-500 flex justify-between mx-12">
-          <h1 className="text-sm font-bold">Não sou cliente</h1>
-          <h1 className="text-sm font-bold">Me Roubaram</h1>
+      <footer className=" p-8 bg-zinc-800/90">
+        <div className="text-purple-400 flex justify-between mx-16">
+          <h1 className="text-md font-semibold">Não sou cliente</h1>
+          <h1 className="text-md font-semibold">Me Roubaram</h1>
         </div>
       </footer>
     </div>

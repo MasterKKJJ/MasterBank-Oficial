@@ -1,6 +1,6 @@
 
 
-"use client"
+
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Ban, Bell, Bolt, CornerDownLeft, Landmark, MailQuestion, Plus, ShieldQuestion, Smartphone, UserPlus, UserRoundPen } from "lucide-react";
 import Image from "next/image";
@@ -100,9 +100,9 @@ const ProfileNotification = ({ User, Bank }: ProfileNotificationProp) => {
                                 <CartoesMenuOption href="/convidaramigos" icon={<UserPlus />} text="Convidar Amigos" />
                                 <DivisaoPequena ignorePadding />
 
-                                <div className="flex justify-center gap-3 p-2 items-center bg-zinc-800 rounded-full">
+                                <div  onClick={() => handleLogout()} className="flex cursor-pointer justify-center gap-3 p-2 items-center bg-zinc-800 rounded-full">
                                     <CornerDownLeft />
-                                    <span onClick={() => handleLogout()}> Sair do Aplicativo</span>
+                                    <span > Sair do Aplicativo</span>
                                 </div>
                             </div>
 

@@ -125,9 +125,9 @@ const CarrousellOptions = () => {
                         {items.map((item, index) => (
                             <CarouselItem
                                 key={index}
-                                className=" justify-center  flex shrink-0 w-full"
+                                className=" justify-center shrink-0 w-full"
                             >
-                                <Link href={item.href} className="w-screen max-w-lg">
+                                <Link href={item.href} className="w-full max-w-lg">
                                     <div className="bg-zinc-800 w-full h-20 rounded-3xl flex justify-between items-center p-4">
                                         <p className="text-white">{item.text}</p>
                                         {item.icon}
