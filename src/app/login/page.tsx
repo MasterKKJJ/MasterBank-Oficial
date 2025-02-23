@@ -45,8 +45,6 @@ export default function Login() {
       alert(data.error);
     }
   };
-
-
   const submithandle = async (e: KeyboardEvent) => {
     if (e.key === "Enter") {
       handleLogin();
@@ -54,10 +52,6 @@ export default function Login() {
 
     }
   }
-
-
-
-
   return (
     <div className="bg-black min-h-screen flex flex-col">
       <header className="">

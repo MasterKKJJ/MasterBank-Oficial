@@ -9,7 +9,7 @@ const PagePixAreaUser = () => {
 
     return (
         <div>
-            <header className="flex justify-between p-2">
+            <header className="flex justify-between py-4 px-2">
                 <div>
                     <X height={20} width={20} className="cursor-pointer" onClick={() => router.back()} />
                 </div>
