@@ -18,9 +18,15 @@ interface ProfileNotificationProp {
 }
 const ProfileNotification = ({ User, Bank }: ProfileNotificationProp) => {
     const router = useRouter();
-    
+
     const handleLogout = async () => {
+
+
         await fetch("/api/logout", { method: "POST", credentials: "include" });
+        // Exemplo de logout
+        localStorage.removeItem('nu-user');
+        localStorage.removeItem('nu-bank');
+
         router.push("/login"); // redireciona para a página de login
     };
 
@@ -100,7 +106,7 @@ const ProfileNotification = ({ User, Bank }: ProfileNotificationProp) => {
                                 <CartoesMenuOption href="/convidaramigos" icon={<UserPlus />} text="Convidar Amigos" />
                                 <DivisaoPequena ignorePadding />
 
-                                <div  onClick={() => handleLogout()} className="flex cursor-pointer justify-center gap-3 p-2 items-center bg-zinc-800 rounded-full">
+                                <div onClick={() => handleLogout()} className="flex cursor-pointer justify-center gap-3 p-2 items-center bg-zinc-800 rounded-full">
                                     <CornerDownLeft />
                                     <span > Sair do Aplicativo</span>
                                 </div>

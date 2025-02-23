@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import DivisaoPequena from "../Components/DivisaoPequena";
 import AreaPixOptions from "./areadepixreal";
 const PagePixAreaUser = () => {
-    console.log('')
+
     const router = useRouter();
 
     return (

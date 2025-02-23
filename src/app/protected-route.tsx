@@ -23,7 +23,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     checkAuth();
   }, []);
 
-  if (isAuthenticated === null) {
+  if (isAuthenticated === null || isAuthenticated === false) {
     return (
       <div className="fullscreen-loader">
         <div className="loader"></div>

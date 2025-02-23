@@ -1,40 +1,42 @@
 import { NextRequest, NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
-import dotenv from 'dotenv'
-dotenv.config()
+import { jwtVerify } from "jose"; // Usa 'jose' no lugar de 'jsonwebtoken' (Edge-compatible)
 
-const SECRET_KEY = process.env.JWT_SECRET || "chave-secreta"; // Use uma variável de ambiente segura
+const SECRET_KEY = new TextEncoder().encode(process.env.JWT_SECRET || "chave-secreta"); // 🔑 Use variáveis seguras!
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
     const token = req.cookies.get("token")?.value;
     const { pathname } = req.nextUrl;
 
-    const isAuthenticated = token ? verifyToken(token) : false;
-    console.log(pathname)
+    const isAuthenticated = token ? await verifyToken(token) : false;
+
     if (!isAuthenticated && pathname !== "/login") {
-        // 🔒 Se não estiver autenticado, redireciona para login
         return NextResponse.redirect(new URL("/login", req.url));
     }
 
     if (isAuthenticated && pathname === "/login") {
-        // 🔄 Se já estiver autenticado e tentar acessar /login, redireciona para a raiz "/"
         return NextResponse.redirect(new URL("/", req.url));
     }
 
     return NextResponse.next();
 }
 
-// Função para verificar se o token JWT é válido e não expirou
-function verifyToken(token: string): boolean {
+// 🔒 Função segura para validar o token e checar expiração
+async function verifyToken(token: string): Promise<boolean> {
     try {
-        jwt.verify(token, SECRET_KEY);
-        return true;
-    } catch {
-        return false;
+        const { payload } = await jwtVerify(token, SECRET_KEY);
+
+        // Verifica se o token tem a claim de expiração (`exp`)
+        if (!payload.exp || Date.now() >= payload.exp * 1000) {
+            return false; // Token expirado
+        }
+
+        return true; // Token válido
+    } catch (error) {
+        return false; // Token inválido
     }
 }
 
-// Aplica o middleware para todas as rotas
+// 🔀 Aplica o middleware para todas as rotas, exceto arquivos estáticos e API
 export const config = {
-    matcher: "/:path*",
+    matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };
