@@ -1,27 +1,17 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import DivisaoPequena from "./Components/DivisaoPequena";
-import HeaderNu from "./Components/Header";
-import MainBank from "./Components/MainBank/MainBank";
-import CarrousellOptions from "./Components/MainBank/CarousellNu";
-import PartesSeparadasComponents from "./Components/MainBank/PartesSeparadasGenerics/PartesSeparadas";
-import PedirCartaoDeCredito from "./Components/MainBank/ComponentesGenericos/PedirCartaoDeCredito";
-import CartoesMenuOption from "./Components/MainBank/CartoesNu";
+import DivisaoPequena from "./(FrontEnd)/Components/DivisaoPequena";
+import HeaderNu from "./(FrontEnd)/Components/Header";
+import MainBank from "./(FrontEnd)/Components/MainBank/MainBank";
+import CarrousellOptions from "./(FrontEnd)/Components/MainBank/CarousellNu";
+import PartesSeparadasComponents from "./(FrontEnd)/Components/MainBank/PartesSeparadasGenerics/PartesSeparadas";
+import PedirCartaoDeCredito from "./(FrontEnd)/Components/MainBank/ComponentesGenericos/PedirCartaoDeCredito";
+import CartoesMenuOption from "./(FrontEnd)/Components/MainBank/CartoesNu";
 import { Smartphone } from "lucide-react";
 import ProtectedRoute from "./protected-route";
 import { BalanceUser, Bank, User } from "@prisma/client";
 import { useRouter } from "next/navigation";
-interface userInfo {
-    id: string;
-    primary_name: string;
-    rest_of_name: string;
-    password: string;
-    cpf: string;
-    email: string;
-    phone: string;
-    account_number: number;
-}
 export default function Home() {
     const router = useRouter();
     const [isVisibleEyes, setIsVisibleEyes] = useState<boolean>(true);
@@ -39,11 +29,14 @@ export default function Home() {
             // Verificar dados no localStorage
             const storedUser = localStorage.getItem('nu-user');
             const storedBank = localStorage.getItem('nu-bank');
-
+            console.log(storedBank)
+            console.log(storedUser)
             if (storedUser && storedBank) {
+                console.log("Achado")
                 setUser(JSON.parse(storedUser));
                 setBankInfo(JSON.parse(storedBank));
             } else {
+                console.log("feito")
                 const [resUser, resBank] = await Promise.all([
                     fetch("/api/infouser", { method: "POST" }),
                     fetch("/api/infobank", { method: "POST" }),
@@ -67,6 +60,7 @@ export default function Home() {
                     // Exemplo de logout
                     localStorage.removeItem('nu-user');
                     localStorage.removeItem('nu-bank');
+                    localStorage.removeItem('token');
 
                     router.push('login');
                 }
@@ -91,10 +85,11 @@ export default function Home() {
             console.error(error);
         }
     };
+
     useEffect(() => {
-        // Atualizar saldo imediatamente e a cada 3 segundos
+        // Atualizar saldo imediatamente e a cada 5 segundos
         fetchBalance();
-        const interval = setInterval(fetchBalance, 3000);
+        const interval = setInterval(fetchBalance, 5000); // Alterado para 5000ms (5 segundos)
         return () => clearInterval(interval);
     }, []);
 

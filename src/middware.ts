@@ -10,6 +10,11 @@ export async function middleware(req: NextRequest) {
     const isAuthenticated = token ? await verifyToken(token) : false;
 
     if (!isAuthenticated && pathname !== "/login") {
+
+        localStorage.removeItem('token')
+        localStorage.removeItem('nu-user');
+        localStorage.removeItem('nu-bank');
+
         return NextResponse.redirect(new URL("/login", req.url));
     }
 

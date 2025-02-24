@@ -32,7 +32,6 @@ const ProfileNotification = ({ User, Bank }: ProfileNotificationProp) => {
 
     // console.log(User?.conta)
     return (
-
         <Sheet >
             <SheetTrigger>
                 <Image
@@ -42,7 +41,6 @@ const ProfileNotification = ({ User, Bank }: ProfileNotificationProp) => {
                     width={60}
                     className="rounded-full"
                     alt="foto padrao"
-
                 />
             </SheetTrigger>
 
@@ -56,7 +54,7 @@ const ProfileNotification = ({ User, Bank }: ProfileNotificationProp) => {
                             <div className="flex gap-4">
                                 <MailQuestion />
                                 <Bolt />
-                                <Bell />
+                                <Bell className="cursor-pointer" onClick={() => router.push('/notificacao')} />
                             </div>
                         </div>
                     </SheetTitle>

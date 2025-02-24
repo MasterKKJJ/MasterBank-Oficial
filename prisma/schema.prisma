@@ -1,37 +1,54 @@
-  generator client {
-    provider = "prisma-client-js"
-  }
+generator client {
+  provider = "prisma-client-js"
+}
 
-  datasource db {
-    provider = "mongodb"
-    url      = env("DATABASE_URL")
-  }
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
 
-  model Bank {
-    id         String @id @default(auto()) @map("_id") @db.ObjectId
-    name       String @default("MasterBank") // Nome fixo do seu banco
-    agency     Float  @unique @default(0001)
-    bankNumber Float  @unique @default(9241) // Número único do seu banco
-    conta String @unique @default("99989829-2")
-    // Removemos a lista de users para evitar redundância
-  }
+model Bank {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  name       String @default("MasterBank") // Nome fixo do seu banco
+  agency     Float  @unique @default(0001)
+  bankNumber Float  @unique @default(9241) // Número único do seu banco
+  conta String @unique @default("99989829-2")
+  // Removemos a lista de users para evitar redundância
+}
 
-  model User {
-    id             String       @id @default(auto()) @map("_id") @db.ObjectId
-    primary_name   String
-    rest_of_name   String
-    password       String
-    cpf            String       @unique
-    email          String       @unique
-    phone          String       @unique
-    account_number Float        @unique // Número da conta no seu banco
-    balance        BalanceUser?
-    // Relação implícita com o banco (não precisa de FK direta)
-  }
+model User {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  primary_name   String
+  rest_of_name   String
+  notificacoes NotifyUser[]
+  password       String
+  cpf            String       @unique
+  email          String       @unique
+  phone          String       @unique
+  account_number Float        @unique // Número da conta no seu banco
+  balance        BalanceUser?
+  // Relação implícita com o banco (não precisa de FK direta)
+}
 
-  model BalanceUser {
-    id      String @id @default(auto()) @map("_id") @db.ObjectId
-    user_id String @unique @db.ObjectId
-    balance Float  @default(0)
-    user    User   @relation(fields: [user_id], references: [id])
-  }
+model BalanceUser {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  user_id String @unique @db.ObjectId
+  balance Float  @default(0)
+  user    User   @relation(fields: [user_id], references: [id])
+}
+
+model NotifyUser {
+  id      String      @id @default(auto()) @map("_id") @db.ObjectId
+  user_id String      @db.ObjectId
+  user    User        @relation(fields: [user_id], references: [id])
+  title   String
+  content String
+  type    TypesNotify
+}
+
+
+enum TypesNotify {
+  TRANSFERENCIA
+  NOVIDADE
+
+}

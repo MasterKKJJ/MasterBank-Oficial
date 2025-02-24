@@ -19,6 +19,7 @@
     "clsx": "^2.1.1",
     "dotenv": "^16.4.7",
     "embla-carousel-react": "^8.5.2",
+    "framer-motion": "^12.4.7",
     "jose": "^6.0.4",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.475.0",

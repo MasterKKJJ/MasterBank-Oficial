@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState, ReactNode } from "react";
-
+import { useRouter } from "next/navigation";
 interface ProtectedRouteProps {
   children: ReactNode;
 }
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
+  const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -24,6 +25,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   }, []);
 
   if (isAuthenticated === null || isAuthenticated === false) {
+
     return (
       <div className="fullscreen-loader">
         <div className="loader"></div>
