@@ -8,8 +8,15 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 # Create .env:
 ```bash
-DATABASE_URL=
-NODE_ENV=production
+# Environment variables declared in this file are automatically made available to Prisma.
+# See the documentation for more detail: https://pris.ly/d/prisma-schema#accessing-environment-variables-from-the-schema
+
+# Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
+# See the documentation for all the connection string options: https://pris.ly/d/connection-strings
+
+DATABASE_URL="SUA STRING DE CONEXAO MONGO OU ETC (AJUSTE)"
+JWT_SECRET="SUA CHAVE PARA ASSINAR O JWT"  # Chave para assinar JWTs
+NODE_ENV="production"
 ```
 ## Getting Started
 
