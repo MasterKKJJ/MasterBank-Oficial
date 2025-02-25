@@ -7,27 +7,45 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum PixType {
+  CPF
+  EMAIL
+  PHONE
+  RANDOM
+}
+
+model PixKey {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  user_id String  @db.ObjectId
+  user    User    @relation(fields: [user_id], references: [id])
+  type    PixType
+  key     String  @unique // Garante que a chave Pix é única no banco
+
+  @@unique([user_id, type]) // Garante que um usuário não tenha mais de uma chave do mesmo tipo
+}
+
 model Bank {
   id         String @id @default(auto()) @map("_id") @db.ObjectId
   name       String @default("MasterBank") // Nome fixo do seu banco
   agency     Float  @unique @default(0001)
   bankNumber Float  @unique @default(9241) // Número único do seu banco
-  conta String @unique @default("99989829-2")
-  // Removemos a lista de users para evitar redundância
+  conta      String @unique @default("99989829-2")
 }
 
 model User {
   id             String       @id @default(auto()) @map("_id") @db.ObjectId
   primary_name   String
   rest_of_name   String
-  notificacoes NotifyUser[]
+  notificacoes   NotifyUser[]
   password       String
   cpf            String       @unique
   email          String       @unique
   phone          String       @unique
   account_number Float        @unique // Número da conta no seu banco
   balance        BalanceUser?
-  // Relação implícita com o banco (não precisa de FK direta)
+
+  // Relação correta com PixKey (um usuário pode ter várias chaves Pix)
+  pixkeys        PixKey[]  
 }
 
 model BalanceUser {
@@ -46,9 +64,7 @@ model NotifyUser {
   type    TypesNotify
 }
 
-
 enum TypesNotify {
   TRANSFERENCIA
   NOVIDADE
-
 }

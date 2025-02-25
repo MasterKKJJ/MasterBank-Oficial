@@ -1,6 +1,6 @@
 "use client"
 import { BadgeCent, Banknote, CalendarClock, Copy, HandCoins, QrCode } from "lucide-react";
-import CaixinhasNubakOptions from "../Components/RefatoracaoComponents/CaixinhasOpcoesNu";
+import CaixinhasNubakOptions from "../../Components/RefatoracaoComponents/CaixinhasOpcoesNu";
 import { useRef, useState } from "react";
 
 const AreaPixOptions = () => {

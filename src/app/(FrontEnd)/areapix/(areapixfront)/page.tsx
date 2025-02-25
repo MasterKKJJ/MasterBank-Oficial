@@ -1,8 +1,9 @@
 "use client"
 import { ChevronRight, CircleHelp, Logs, Mic, Shield, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import DivisaoPequena from "../Components/DivisaoPequena";
+import DivisaoPequena from "../../Components/DivisaoPequena";
 import AreaPixOptions from "./areadepixreal";
+import Link from "next/link";
 const PagePixAreaUser = () => {
 
     const router = useRouter();
@@ -39,8 +40,8 @@ const PagePixAreaUser = () => {
                         <div>
                             <p className="text-md text-gray-400">Preferências</p>
                         </div>
-                        <div className="flex flex-col gap-2 mt-3 ">
-                            <div className="flex justify-between items-center  cursor-pointer">
+                        <div className="flex flex-col gap-2 mt-3">
+                            <Link href={'/areapix/trazerchaves'} className="flex justify-between items-center  cursor-pointer">
 
                                 <div className="flex gap-3">
                                     <Shield />
@@ -48,7 +49,7 @@ const PagePixAreaUser = () => {
                                 </div>
                                 <ChevronRight height={16} width={16} />
 
-                            </div>
+                            </Link>
                             <DivisaoPequena ignorePadding />
                             <div className="flex justify-between items-center">
 

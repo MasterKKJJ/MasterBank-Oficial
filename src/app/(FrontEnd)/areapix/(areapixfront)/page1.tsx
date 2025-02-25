@@ -1,6 +1,6 @@
 "use client"
 import { Barcode, DollarSign, HandCoins, Smartphone, Flower } from "lucide-react";
-import CaixinhasNubakOptions from "../Components/RefatoracaoComponents/CaixinhasOpcoesNu";
+import CaixinhasNubakOptions from "../../Components/RefatoracaoComponents/CaixinhasOpcoesNu";
 import { useRef, useState } from "react";
 const AreaPixUser = () => {
     const scrollRef = useRef<HTMLDivElement>(null);

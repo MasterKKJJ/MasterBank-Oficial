@@ -56,10 +56,27 @@ async function main() {
   // })
 
 
-  const notificacao = await prisma.notifyUser.findMany({
-    where: { user_id: user?.id },
+  // const notificacao = await prisma.notifyUser.upsert({
+  //   where: {
+  //     id: "67bdeaf757985a1cfb5450e4"
+  //   },
+  //   update: {
+  //     content: 'Compra de R$ 5,00 em Mercado Marcelo 123'
+  //   },
+  //   create: {
+  //     id: "67bdeaf757985a1cfb5450e4",
+  //     user_id: "67b9436e409b0fbff8877022",
+  //     title: "Compra no débito aprovada",
+  //     content: "Compra de R$ 5,00 em Mercado Teste123",
+  //     type: "TRANSFERENCIA"
+  //   }
+  // });
 
-  })
+
+  // const notificacao = await prisma.notifyUser.findMany({
+  //   where: { user_id: user?.id },
+
+  // })
 
   console.log('Saldo atualizado com sucesso!', { notificacao });
 
