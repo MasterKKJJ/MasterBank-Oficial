@@ -104,8 +104,6 @@ export async function POST(req: Request) {
                 }
 
             } else if (chave === "RANDOM") {
-
-
                 // Verifica se a chave já existe
                 existingPixKey = await prisma.pixKey.findFirst({
                     where: { user_id: User.id, type: "RANDOM" },
